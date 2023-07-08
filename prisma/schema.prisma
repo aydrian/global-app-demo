@@ -18,7 +18,7 @@ model i18n {
 }
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
-model product {
+model Product {
   id          String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name        String
   market      String
@@ -27,13 +27,12 @@ model product {
   currency    String
 
   @@index([market])
+  @@map("product")
 }
 
 enum crdb_internal_region {
-  aws_ap_south_1     @map("aws-ap-south-1")
-  aws_ap_southeast_1 @map("aws-ap-southeast-1")
-  aws_eu_central_1   @map("aws-eu-central-1")
-  aws_eu_west_1      @map("aws-eu-west-1")
-  aws_us_east_1      @map("aws-us-east-1")
-  aws_us_west_2      @map("aws-us-west-2")
+  aws_eu_central_1 @map("aws-eu-central-1")
+  aws_eu_west_1    @map("aws-eu-west-1")
+  aws_us_east_1    @map("aws-us-east-1")
+  aws_us_west_2    @map("aws-us-west-2")
 }
