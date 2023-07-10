@@ -12,6 +12,7 @@ import i18n from "./i18n.ts";
 async function hydrate() {
   await i18next
     .use(initReactI18next) // Tell i18next to use the react-i18next plugin
+    // @ts-ignore
     .use(LanguageDetector) // Setup a client-side language detector
     .use(Backend) // Setup your backend
     .init({
@@ -33,6 +34,7 @@ async function hydrate() {
   startTransition(() => {
     hydrateRoot(
       document,
+      //@ts-ignore
       <I18nextProvider i18n={i18next}>
         <StrictMode>
           <RemixBrowser />
