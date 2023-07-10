@@ -7,5 +7,5 @@ export default {
   // Disabling suspense is recommended
   react: { useSuspense: false },
   // This is the list of languages your application supports
-  supportedLngs: ["en", "es", "de", "zh"]
+  supportedLngs: ["en", "es", "de", "zh", "jp"]
 };
