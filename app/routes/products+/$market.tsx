@@ -37,7 +37,7 @@ export default function ProductsMarket() {
   const locale = useLocale();
   return (
     <>
-      <h2 className="mb-4 text-2xl font-semibold leading-tight text-gray-700">
+      <h2 className="mb-4 text-2xl font-semibold leading-tight text-crl-deep-purple">
         {t("Menu")}
       </h2>
       <div className="flex flex-wrap items-center justify-start gap-4 sm:flex-row md:justify-around md:gap-8 lg:gap-16">
