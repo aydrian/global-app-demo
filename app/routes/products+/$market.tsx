@@ -1,5 +1,7 @@
 import { type LoaderArgs, json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
+import { useTranslation } from "react-i18next";
+import * as pkg from "remix-i18next";
 
 import {
   Card,
@@ -7,8 +9,8 @@ import {
   CardHeader,
   CardTitle
 } from "~/components/ui/card.tsx";
-import useLocale from "~/hooks/use-locale.tsx";
 import { prisma } from "~/utils/db.server.ts";
+const { useLocale } = pkg;
 
 export async function loader({ params }: LoaderArgs) {
   const { market } = params;
@@ -30,6 +32,7 @@ export async function loader({ params }: LoaderArgs) {
 
 export default function ProductsMarket() {
   const { products } = useLoaderData<typeof loader>();
+  const { t } = useTranslation();
   const locale = useLocale();
   return (
     <>
@@ -40,7 +43,7 @@ export default function ProductsMarket() {
         {products.map((product) => (
           <Card className="w-48" key={product.id}>
             <CardHeader>
-              <CardTitle>{product.name}</CardTitle>
+              <CardTitle>{t(product.name)}</CardTitle>
             </CardHeader>
             <CardContent>
               {new Intl.NumberFormat(locale, {

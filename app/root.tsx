@@ -1,6 +1,5 @@
-import type { LinksFunction, LoaderArgs } from "@remix-run/node";
-
-import { cssBundleHref } from "@remix-run/css-bundle";
+// import { cssBundleHref } from "@remix-run/css-bundle";
+import { type LinksFunction, type LoaderArgs, json } from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -10,34 +9,46 @@ import {
   ScrollRestoration,
   useLoaderData
 } from "@remix-run/react";
-import acceptLanguage from "accept-language-parser";
+import { useTranslation } from "react-i18next";
+// import { useChangeLanguage } from "remix-i18next";
+import * as pkg from "remix-i18next";
 
-import { LocaleProvider } from "./hooks/use-locale.tsx";
+import i18next from "~/utils/i18next.server.ts";
+
 import styles from "./tailwind.css";
 
+const { useChangeLanguage } = pkg;
+
 export const links: LinksFunction = () => [
-  { href: styles, rel: "stylesheet" },
-  ...(cssBundleHref ? [{ href: cssBundleHref, rel: "stylesheet" }] : [])
+  { href: styles, rel: "stylesheet" }
+  // ...(cssBundleHref ? [{ href: cssBundleHref, rel: "stylesheet" }] : [])
 ];
 
 export async function loader({ request }: LoaderArgs) {
-  const languages = acceptLanguage.parse(
-    request.headers.get("Accept-Language") as string
-  );
-
-  // If somehow the header is empty, return a default locale
-  if (languages?.length < 1) return "en-us";
-
-  // If there is no region for this locale, just return the code
-  if (!languages[0].region) return languages[0].code;
-
-  return `${languages[0].code}-${languages[0].region.toLowerCase()}`;
+  let locale = await i18next.getLocale(request);
+  return json({ locale });
 }
+export let handle = {
+  // In the handle export, we can add a i18n key with namespaces our route
+  // will need to load. This key can be a single string or an array of strings.
+  // TIP: In most cases, you should set this to your defaultNS from your i18n config
+  // or if you did not set one, set it to the i18next default namespace "translation"
+  i18n: "common"
+};
 
 export default function App() {
-  const locale = useLoaderData<typeof loader>();
+  // Get the locale from the loader
+  let { locale } = useLoaderData<typeof loader>();
+
+  let { i18n } = useTranslation();
+
+  // This hook will change the i18n instance language to the current locale
+  // detected by the loader, this way, when we do something to change the
+  // language, this locale will change and i18next will load the correct
+  // translation files
+  useChangeLanguage(locale);
   return (
-    <html lang="en">
+    <html dir={i18n.dir()} lang={locale}>
       <head>
         <meta charSet="utf-8" />
         <meta content="width=device-width,initial-scale=1" name="viewport" />
@@ -45,9 +56,7 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <LocaleProvider locale={locale}>
-          <Outlet />
-        </LocaleProvider>
+        <Outlet />
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
