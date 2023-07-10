@@ -1,12 +1,12 @@
 import { type LoaderArgs, json } from "@remix-run/node";
 import { NavLink, Outlet, useLoaderData } from "@remix-run/react";
-import * as pkg from "remix-i18next";
-// import { useLocale } from "remix-i18next";
+// import * as pkg from "remix-i18next";
+import { useLocale } from "remix-i18next";
 
 import { prisma } from "~/utils/db.server.ts";
 import env from "~/utils/env.server.ts";
 
-const { useLocale } = pkg;
+// const { useLocale } = pkg;
 
 export async function loader({ request }: LoaderArgs) {
   const markets = await prisma.product.groupBy({

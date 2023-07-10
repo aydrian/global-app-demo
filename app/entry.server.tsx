@@ -8,12 +8,9 @@ import { renderToPipeableStream } from "react-dom/server";
 import { I18nextProvider, initReactI18next } from "react-i18next";
 import { PassThrough } from "stream";
 
-import i18n from "~/i18n.ts";
+import i18n from "~/i18n.ts"; // your i18n configuration file
 import i18next from "~/utils/i18next.server.ts";
-
-import Backend from "./utils/i18next-prisma-backend.server.ts"; // your i18n configuration file
-
-import { prisma } from "./utils/db.server.ts";
+import Backend from "~/utils/i18next-prisma-backend.server.ts";
 
 const ABORT_DELAY = 5000;
 
@@ -36,7 +33,7 @@ export default async function handleRequest(
     .use(Backend) // Setup our backend
     .init({
       ...i18n, // spread the configuration
-      backend: { client: prisma },
+      backend: {},
       lng, // The locale we detected above
       ns // The namespaces the routes about to render wants to use
     });

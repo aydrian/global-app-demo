@@ -1,10 +1,7 @@
-import { resolve } from "node:path";
-// import { RemixI18Next } from "remix-i18next";
-import * as pkg from "remix-i18next";
+import { RemixI18Next } from "remix-i18next";
 
-import i18n from "../i18n.ts"; // your i18n configuration file
+import i18n from "~/i18n.ts"; // your i18n configuration file
 import Backend from "./i18next-prisma-backend.server.ts";
-const { RemixI18Next } = pkg;
 
 let i18next = new RemixI18Next({
   detection: {
@@ -15,9 +12,7 @@ let i18next = new RemixI18Next({
   // when translating messages server-side only
   i18next: {
     ...i18n,
-    backend: {
-      loadPath: resolve("./public/locales/{{lng}}/{{ns}}.json")
-    }
+    backend: {}
   },
   // The i18next plugins you want RemixI18next to use for `i18n.getFixedT` inside loaders and actions.
   // E.g. The Backend plugin for loading translations from the file system

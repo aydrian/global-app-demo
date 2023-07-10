@@ -10,14 +10,14 @@ import {
   useLoaderData
 } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
-// import { useChangeLanguage } from "remix-i18next";
-import * as pkg from "remix-i18next";
+import { useChangeLanguage } from "remix-i18next";
+// import * as pkg from "remix-i18next";
 
 import i18next from "~/utils/i18next.server.ts";
 
 import styles from "./tailwind.css";
 
-const { useChangeLanguage } = pkg;
+// const { useChangeLanguage } = pkg;
 
 export const links: LinksFunction = () => [
   { href: styles, rel: "stylesheet" }

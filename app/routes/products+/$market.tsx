@@ -1,7 +1,8 @@
 import { type LoaderArgs, json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
-import * as pkg from "remix-i18next";
+// import * as pkg from "remix-i18next";
+import { useLocale } from "remix-i18next";
 
 import {
   Card,
@@ -10,7 +11,7 @@ import {
   CardTitle
 } from "~/components/ui/card.tsx";
 import { prisma } from "~/utils/db.server.ts";
-const { useLocale } = pkg;
+// const { useLocale } = pkg;
 
 export async function loader({ params }: LoaderArgs) {
   const { market } = params;

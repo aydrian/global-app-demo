@@ -1,13 +1,13 @@
 import { RemixBrowser } from "@remix-run/react";
 import i18next from "i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
+import Backend from "i18next-http-backend";
 import { StrictMode, startTransition } from "react";
 import { hydrateRoot } from "react-dom/client";
 import { I18nextProvider, initReactI18next } from "react-i18next";
 import { getInitialNamespaces } from "remix-i18next";
 
 import i18n from "./i18n.ts";
-import Backend from "./utils/i18next-prisma-backend.server.ts";
 
 async function hydrate() {
   await i18next
@@ -16,7 +16,7 @@ async function hydrate() {
     .use(Backend) // Setup your backend
     .init({
       ...i18n, // spread the configuration
-      // backend: { loadPath: "/locales/{{lng}}/{{ns}}.json" },
+      backend: { loadPath: "/resources/locales/{{lng}}/{{ns}}" },
       detection: {
         // Here only enable htmlTag detection, we'll detect the language only
         // server-side with remix-i18next, by using the `<html lang>` attribute

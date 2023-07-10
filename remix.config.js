@@ -19,6 +19,7 @@ export default {
     return flatRoutes("routes", defineRoutes);
   },
   // serverBuildPath: "build/index.js",
+  serverDependenciesToBundle: ["remix-i18next"],
   serverModuleFormat: "esm",
   tailwind: true
 };
