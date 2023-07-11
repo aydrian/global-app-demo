@@ -7,16 +7,23 @@ import { prisma } from "~/utils/db.server.ts";
 import env from "~/utils/env.server.ts";
 
 export async function loader({ request }: LoaderArgs) {
+  const start = new Date();
+
   const markets = await prisma.product.groupBy({
     _count: { _all: true },
     by: ["market"],
     orderBy: { market: "asc" }
   });
-  return json({ FLY_REGION: env.FLY_REGION, markets });
+
+  return json({
+    FLY_REGION: env.FLY_REGION,
+    elapsed: new Date().getTime() - start.getTime(),
+    markets,
+  });
 }
 
 export default function ProductsLayout() {
-  const { FLY_REGION, markets } = useLoaderData<typeof loader>();
+  const { FLY_REGION, elapsed, markets } = useLoaderData<typeof loader>();
   const locale = useLocale();
   return (
     <>
@@ -46,13 +53,14 @@ export default function ProductsLayout() {
           </nav>
         </div>
       </header>
-      <main className="min-h-[calc(100vh-3.6rem)] px-6 pt-32 md:px-12 lg:px-36">
+      <main className="min-h-[calc(100vh-4.6rem)] px-6 pt-32 md:px-12 lg:px-36">
         <Outlet />
       </main>
       <footer className="flex items-center justify-between bg-crl-deep-purple p-4 text-sm font-bold text-white">
         <div className="flex flex-col text-xs">
           <span>Fly Region: {FLY_REGION}</span>
           <span>Locale: {locale}</span>
+          <span>Elapsed: {elapsed}</span>
         </div>
         <a
           href="https://github.com/aydrian/global-app-demo"
