@@ -35,7 +35,7 @@ export default function ProductsLayout() {
       <header className="fixed w-full bg-white">
         <div className="flex items-center justify-center px-6 py-2 md:px-12 lg:px-36">
           <CoffeeBean className="mr-2 h-8 w-auto text-amber-950" />
-          <h1 className="text-center text-3xl font-bold leading-tight text-gray-900">
+          <h1 className="text-center text-3xl font-bold leading-tight text-crl-deep-purple">
             RoachRoast
           </h1>
         </div>

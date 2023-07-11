@@ -1,4 +1,4 @@
-// import { cssBundleHref } from "@remix-run/css-bundle";
+import { cssBundleHref } from "@remix-run/css-bundle";
 import { type LinksFunction, type LoaderArgs, json } from "@remix-run/node";
 import {
   Links,
@@ -11,17 +11,16 @@ import {
 } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
 import { useChangeLanguage } from "remix-i18next";
-// import * as pkg from "remix-i18next";
 
 import i18next from "~/utils/i18next.server.ts";
 
 import styles from "./tailwind.css";
 
-// const { useChangeLanguage } = pkg;
-
 export const links: LinksFunction = () => [
-  { href: styles, rel: "stylesheet" }
-  // ...(cssBundleHref ? [{ href: cssBundleHref, rel: "stylesheet" }] : [])
+  { href: styles, rel: "stylesheet" },
+  { href: "/assets/images/favicon.svg", rel: "icon", type: "image/svg+xml" },
+  { href: "/assets/images/favicon.png", rel: "icon", type: "image/png" },
+  ...(cssBundleHref ? [{ href: cssBundleHref, rel: "stylesheet" }] : [])
 ];
 
 export async function loader({ request }: LoaderArgs) {
@@ -54,11 +53,6 @@ export default function App() {
         <meta content="width=device-width,initial-scale=1" name="viewport" />
         <Meta />
         <Links />
-        <link
-          href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>☕️</text></svg>"
-          rel="icon"
-          type="image/svg+xml"
-        />
       </head>
       <body>
         <Outlet />
