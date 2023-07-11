@@ -16,6 +16,8 @@ import { prisma } from "~/utils/db.server.ts";
 export async function loader({ params }: LoaderArgs) {
   const { market } = params;
 
+  const startDate = new Date();
+
   const products = await prisma.product.findMany({
     orderBy: { name: "asc" },
     select: {
@@ -28,17 +30,23 @@ export async function loader({ params }: LoaderArgs) {
     where: { market }
   });
 
-  return json({ products });
+  return json({
+    elapsed: new Date().getTime() - startDate.getTime(),
+    products
+  });
 }
 
 export default function ProductsMarket() {
-  const { products } = useLoaderData<typeof loader>();
+  const { elapsed, products } = useLoaderData<typeof loader>();
   const { t } = useTranslation();
   const locale = useLocale();
   return (
     <>
       <h2 className="mb-4 text-2xl font-semibold leading-tight text-crl-deep-purple">
-        {t("Menu")}
+        {t("Menu")}{" "}
+        <span className="text-base font-light text-gray-800">
+          ({elapsed}ms)
+        </span>
       </h2>
       <div className="flex flex-wrap items-center justify-start gap-4 sm:flex-row md:justify-around md:gap-8 lg:gap-16">
         {products.map((product) => (

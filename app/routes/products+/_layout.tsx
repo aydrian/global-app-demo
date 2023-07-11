@@ -3,51 +3,56 @@ import { NavLink, Outlet, useLoaderData } from "@remix-run/react";
 import { Github } from "lucide-react";
 import { useLocale } from "remix-i18next";
 
+import CoffeeBean from "~/components/coffee-bean.tsx";
 import { prisma } from "~/utils/db.server.ts";
 import env from "~/utils/env.server.ts";
 
 export async function loader({ request }: LoaderArgs) {
-  const start = new Date();
+  const result = await prisma.$queryRaw<
+    { gateway_region: string }[]
+  >`SELECT gateway_region();`;
 
-  const markets = await prisma.product.groupBy({
-    _count: { _all: true },
-    by: ["market"],
-    orderBy: { market: "asc" }
-  });
+  const markets = [
+    { code: "de", name: "Germany" },
+    { code: "mx", name: "Mexico" },
+    { code: "uk", name: "United Kingdom" },
+    { code: "us", name: "United States" }
+  ];
 
   return json({
+    CRDB_GATEWAY_REGION: result[0].gateway_region,
     FLY_REGION: env.FLY_REGION,
-    elapsed: new Date().getTime() - start.getTime(),
-    markets,
+    markets
   });
 }
 
 export default function ProductsLayout() {
-  const { FLY_REGION, elapsed, markets } = useLoaderData<typeof loader>();
+  const { CRDB_GATEWAY_REGION, FLY_REGION, markets } =
+    useLoaderData<typeof loader>();
   const locale = useLocale();
   return (
     <>
-      <header className="fixed w-full">
-        <div className="px-6 md:px-12 lg:px-36">
-          <h1 className="p-4 text-center text-3xl font-bold leading-tight text-gray-900">
-            RoachRoast 🪳☕️
+      <header className="fixed w-full bg-white">
+        <div className="flex items-center justify-center px-6 py-2 md:px-12 lg:px-36">
+          <CoffeeBean className="mr-2 h-8 w-auto text-amber-950" />
+          <h1 className="text-center text-3xl font-bold leading-tight text-gray-900">
+            RoachRoast
           </h1>
         </div>
         <div className="flex w-full flex-wrap bg-crl-deep-purple p-2 pb-0 text-white md:px-12 lg:px-36">
-          <div className="p-2 font-medium">Markets:</div>
-          <nav className="flex gap-4">
-            {markets.map(({ _count: { _all: count }, market }) => (
+          <nav className="mx-auto flex gap-4">
+            {markets.map(({ code, name }) => (
               <NavLink
                 className={({ isActive }) =>
                   isActive
                     ? "rounded-t-md bg-crl-electric-purple p-2"
                     : "hover: p-2 hover:rounded-t-md hover:bg-crl-action-blue"
                 }
-                key={market}
-                to={`./${market}`}
+                key={code}
+                to={`./${code}`}
               >
-                <span>{market.toUpperCase()}</span>
-                <span className="hidden sm:inline"> ({count})</span>
+                <span className="hidden sm:inline">{name}</span>
+                <span className="sm:hidden">{code.toUpperCase()}</span>
               </NavLink>
             ))}
           </nav>
@@ -58,9 +63,9 @@ export default function ProductsLayout() {
       </main>
       <footer className="flex items-center justify-between bg-crl-deep-purple p-4 text-sm font-bold text-white">
         <div className="flex flex-col text-xs">
+          <span>CockroachDB Region: {CRDB_GATEWAY_REGION}</span>
           <span>Fly Region: {FLY_REGION}</span>
           <span>Locale: {locale}</span>
-          <span>Elapsed: {elapsed}</span>
         </div>
         <a
           href="https://github.com/aydrian/global-app-demo"
