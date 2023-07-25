@@ -1,0 +1,98 @@
+[
+  {
+    "id": "2f22da46-d983-4878-8ad2-a6e6ff7e8f39",
+    "name": "Americano",
+    "market": "de",
+    "crdb_region": "aws-eu-central-1",
+    "amount": 4.40,
+    "currency": "eur"
+  },
+  {
+    "id": "a5ece2cb-6b76-46fd-a11b-a53dcf2f0669",
+    "name": "Latte",
+    "market": "de",
+    "crdb_region": "aws-eu-central-1",
+    "amount": 4.80,
+    "currency": "eur"
+  },
+  {
+    "id": "de17b8db-a6dc-48a3-a33b-1272365c7226",
+    "name": "Cappuccino",
+    "market": "de",
+    "crdb_region": "aws-eu-central-1",
+    "amount": 4.80,
+    "currency": "eur"
+  },
+  {
+    "id": "2586aa2c-84e0-4f28-b299-732c2314aa91",
+    "name": "Cappuccino",
+    "market": "uk",
+    "crdb_region": "aws-eu-west-1",
+    "amount": 4.15,
+    "currency": "gbp"
+  },
+  {
+    "id": "279d936b-2f68-445d-9301-cd062d283859",
+    "name": "Latte",
+    "market": "uk",
+    "crdb_region": "aws-eu-west-1",
+    "amount": 4.15,
+    "currency": "gbp"
+  },
+  {
+    "id": "b7eaba08-2d20-4109-9a39-aeba20c486a4",
+    "name": "Americano",
+    "market": "uk",
+    "crdb_region": "aws-eu-west-1",
+    "amount": 3.80,
+    "currency": "gbp"
+  },
+  {
+    "id": "0cc06e87-713c-4edd-af0b-627be0fb6843",
+    "name": "Latte",
+    "market": "us",
+    "crdb_region": "aws-us-east-1",
+    "amount": 5.24,
+    "currency": "usd"
+  },
+  {
+    "id": "b6f2327f-80c3-44ce-9c3c-d0c04736c90f",
+    "name": "Americano",
+    "market": "us",
+    "crdb_region": "aws-us-east-1",
+    "amount": 4.80,
+    "currency": "usd"
+  },
+  {
+    "id": "c880c792-32df-43d7-9b4d-d5745c842f4b",
+    "name": "Cappuccino",
+    "market": "us",
+    "crdb_region": "aws-us-east-1",
+    "amount": 5.24,
+    "currency": "usd"
+  },
+  {
+    "id": "54384357-cd35-40bf-a38b-429d3bf203d5",
+    "name": "Latte",
+    "market": "mx",
+    "crdb_region": "aws-us-west-2",
+    "amount": 89.59,
+    "currency": "mxn"
+  },
+  {
+    "id": "76134971-6808-4087-b37d-6827776fd864",
+    "name": "Americano",
+    "market": "mx",
+    "crdb_region": "aws-us-west-2",
+    "amount": 82.03,
+    "currency": "mxn"
+  },
+  {
+    "id": "8325becd-5a80-4fc0-a939-6e5439882eb7",
+    "name": "Cappuccino",
+    "market": "mx",
+    "crdb_region": "aws-us-west-2",
+    "amount": 89.59,
+    "currency": "mxn"
+  }
+]

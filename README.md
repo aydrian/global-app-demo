@@ -1,46 +1,98 @@
-# Global App Demo
+# RoachRoast
 
-A global app that uses Multi-region CockroachDB and Fly
+A global Remix app with localization and translations that uses multi-region CockroachDB and is deployed on Fly.
 
-- [Remix Docs](https://remix.run/docs)
+## 🥞 Tech Stack
 
-## Fly Setup
+- Web Framework - 💿 [Remix](https://remix.run/)
+- Database - 🪳 [CockroachDB](https://www.cockroachlabs.com/)
+- Database ORM - △ [Prisma](https://www.prisma.io/)
+- Styling - 🍃 [Tailwind CSS](https://tailwindcss.com/)
+- UI Components - 🧱 [shadcn/ui](https://ui.shadcn.com/) and [Radix](https://www.radix-ui.com/)
+- Hosting - 🎈 [Fly](https://fly.io/)
 
-1. [Install `flyctl`](https://fly.io/docs/getting-started/installing-flyctl/)
+## 💾 Database Setup
 
-2. Sign up and log in to Fly
+This application uses Prisma to manage our database.
 
-```sh
-flyctl auth signup
+### 🧳 Migrate Schema Changes
+
+1. Update the `DATABASE_URL` environment variable with your CockroachDB connection string.
+2. Run `npx prisma migrate` to create the database schema.
+
+### 🌎 Region Configuration
+
+TBD
+
+## 🧑‍💻 Development
+
+### 🌱 Seed the Database
+
+If you are starting with a blank database, you can populate it by running the following command
+
+```shell
+npx prisma db seed
 ```
 
-3. Setup Fly. It might ask if you want to deploy, say no since you haven't built the app yet.
+### 💿 Run the Remix app locally
 
-```sh
-flyctl launch
-```
+- From your terminal:
 
-## Development
+  ```sh
+  npm run dev
+  ```
 
-From your terminal:
+  This starts your app in development mode, rebuilding assets on file changes.
 
-```sh
-npm run dev
-```
+- Open up [https://localhost:3000](https://localhost:3000) and you should be ready to go!
 
-This starts your app in development mode, rebuilding assets on file changes.
+## 🚧 Deployment
 
-## Deployment
+This app is set up to deploy to [Fly.io](https://fly.io/) and comes with a GitHub Action that handles automatically deploying the app to production.
 
-If you've followed the setup instructions already, all you need to do is run this:
+Prior to your first deployment, you'll need to do a few things:
 
-```sh
-npm run deploy
-```
+- [Install Fly](https://fly.io/docs/getting-started/installing-flyctl/)
 
-You can run `flyctl info` to get the url and ip address of your server.
+- Sign up and log in to Fly
 
-Check out the [fly docs](https://fly.io/docs/getting-started/node/) for more information.
+  ```sh
+  fly auth signup
+  ```
+
+  > **Note**: If you have more than one Fly account, ensure that you are signed
+  > into the same account in the Fly CLI as you are in the browser. In your
+  > terminal, run `fly auth whoami` and ensure the email matches the Fly account
+  > signed into the browser.
+
+- Create a new app on Fly:
+
+  ```sh
+  fly apps create [YOUR_APP_NAME]
+  ```
+
+  > **Note**: Make sure this name matches the `app` set in your `fly.toml` file.
+  > Otherwise, you will not be able to deploy.
+
+- Add a `FLY_API_TOKEN` to your GitHub repo. To do this, go to your user
+  settings on Fly and create a new
+  [token](https://web.fly.io/user/personal_access_tokens/new), then add it to
+  [your repo secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets)
+  with the name `FLY_API_TOKEN`.
+
+- Add your environment vacriables to your fly app secrets, to do this you can run the following commands:
+
+  ```sh
+  fly secrets set DATABASE_URL="postgresql://" [additional secrets] --app [YOUR_APP_NAME]
+  ```
+
+  If you don't have openssl installed, you can also use
+  [1Password](https://1password.com/password-generator) to generate a random
+  secret, just replace `$(openssl rand -hex 32)` with the generated secret.
+
+Now that everything is set up you can commit and push your changes to your repo.
+Every commit to your `main` branch will trigger a deployment to your production
+environment.
 
 ## 📝 License
 
