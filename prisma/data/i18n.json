@@ -1,102 +1,102 @@
 [
   {
-    "word": "Americano",
-    "lang": "de",
+    "key": "Americano",
+    "language": "de",
     "translation": "Americano"
   },
   {
-    "word": "Americano",
-    "lang": "en",
+    "key": "Americano",
+    "language": "en",
     "translation": "Americano"
   },
   {
-    "word": "Americano",
-    "lang": "es",
+    "key": "Americano",
+    "language": "es",
     "translation": "Americano"
   },
   {
-    "word": "Americano",
-    "lang": "ja",
+    "key": "Americano",
+    "language": "ja",
     "translation": "アメリカーノ"
   },
   {
-    "word": "Americano",
-    "lang": "zh",
+    "key": "Americano",
+    "language": "zh",
     "translation": "美式咖啡"
   },
   {
-    "word": "Cappuccino",
-    "lang": "de",
+    "key": "Cappuccino",
+    "language": "de",
     "translation": "Cappuccino"
   },
   {
-    "word": "Cappuccino",
-    "lang": "en",
+    "key": "Cappuccino",
+    "language": "en",
     "translation": "Cappuccino"
   },
   {
-    "word": "Cappuccino",
-    "lang": "es",
+    "key": "Cappuccino",
+    "language": "es",
     "translation": "Capuchino"
   },
   {
-    "word": "Cappuccino",
-    "lang": "ja",
+    "key": "Cappuccino",
+    "language": "ja",
     "translation": "カプチーノ"
   },
   {
-    "word": "Cappuccino",
-    "lang": "zh",
+    "key": "Cappuccino",
+    "language": "zh",
     "translation": "卡布奇诺"
   },
   {
-    "word": "Latte",
-    "lang": "de",
+    "key": "Latte",
+    "language": "de",
     "translation": "Latté"
   },
   {
-    "word": "Latte",
-    "lang": "en",
+    "key": "Latte",
+    "language": "en",
     "translation": "Latte"
   },
   {
-    "word": "Latte",
-    "lang": "es",
+    "key": "Latte",
+    "language": "es",
     "translation": "Latté"
   },
   {
-    "word": "Latte",
-    "lang": "ja",
+    "key": "Latte",
+    "language": "ja",
     "translation": "ラテ"
   },
   {
-    "word": "Latte",
-    "lang": "zh",
+    "key": "Latte",
+    "language": "zh",
     "translation": "拿铁"
   },
   {
-    "word": "Menu",
-    "lang": "de",
+    "key": "Menu",
+    "language": "de",
     "translation": "Speisekarte"
   },
   {
-    "word": "Menu",
-    "lang": "en",
+    "key": "Menu",
+    "language": "en",
     "translation": "Menu"
   },
   {
-    "word": "Menu",
-    "lang": "es",
+    "key": "Menu",
+    "language": "es",
     "translation": "Menú"
   },
   {
-    "word": "Menu",
-    "lang": "ja",
+    "key": "Menu",
+    "language": "ja",
     "translation": "メニュー"
   },
   {
-    "word": "Menu",
-    "lang": "zh",
+    "key": "Menu",
+    "language": "zh",
     "translation": "菜单"
   }
 ]

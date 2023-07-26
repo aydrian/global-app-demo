@@ -9,12 +9,13 @@ datasource db {
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model i18n {
-  word        String
-  lang        String
+  namespace   String @default("common")
+  language    String @map("lang")
+  key         String @map("word")
   translation String
 
-  @@id([word, lang])
-  @@index([lang, translation], map: "i18n_lang_idx")
+  @@id([key, language])
+  @@index([language, translation], map: "i18n_lang_idx")
 }
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments

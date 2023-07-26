@@ -19,7 +19,7 @@ export default {
     return flatRoutes("routes", defineRoutes);
   },
   // serverBuildPath: "build/index.js",
-  serverDependenciesToBundle: ["remix-i18next"],
+  serverDependenciesToBundle: ["remix-i18next", "i18next-prisma-backend"],
   serverModuleFormat: "esm",
   tailwind: true
 };

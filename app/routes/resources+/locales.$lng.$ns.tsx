@@ -5,13 +5,13 @@ import { prisma } from "~/utils/db.server.ts";
 export async function loader({ params }: LoaderArgs) {
   const { lng = "en" } = params;
   const result = await prisma.i18n.findMany({
-    select: { translation: true, word: true },
-    where: { lang: lng }
+    select: { key: true, translation: true },
+    where: { language: lng }
   });
-  const resources = result.reduce((obj, { translation, word }) => {
+  const resources = result.reduce((obj, { key, translation }) => {
     return {
       ...obj,
-      [word]: translation
+      [key]: translation
     };
   }, {});
   return json(resources);

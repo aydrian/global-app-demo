@@ -3,14 +3,17 @@ import type { EntryContext } from "@remix-run/node";
 import { Response } from "@remix-run/node";
 import { RemixServer } from "@remix-run/react";
 import { createInstance } from "i18next";
+import Backend from "i18next-prisma-backend";
 import isbot from "isbot";
 import { renderToPipeableStream } from "react-dom/server";
 import { I18nextProvider, initReactI18next } from "react-i18next";
 import { PassThrough } from "stream";
 
 import i18n from "~/i18n.ts"; // your i18n configuration file
+
 import i18next from "~/utils/i18next.server.ts";
-import Backend from "~/utils/i18next-prisma-backend.server.ts";
+
+import { prisma } from "./utils/db.server.ts";
 
 const ABORT_DELAY = 5000;
 
@@ -33,7 +36,7 @@ export default async function handleRequest(
     .use(Backend) // Setup our backend
     .init({
       ...i18n, // spread the configuration
-      backend: {},
+      backend: { client: prisma },
       lng, // The locale we detected above
       ns // The namespaces the routes about to render wants to use
     });

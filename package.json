@@ -8,7 +8,7 @@
   "scripts": {
     "build": "remix build",
     "deploy": "fly deploy --remote-only",
-    "dev": "remix dev --no-restart -c \"node server.js\"",
+    "dev": "remix dev --manual -c \"node server.js\"",
     "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
     "lint:fix": "eslint --fix --cache --cache-location ./node_modules/.cache/eslint .",
     "start": "cross-env NODE_ENV=production node ./server.js",
@@ -33,6 +33,7 @@
     "i18next": "^23.2.11",
     "i18next-browser-languagedetector": "^7.1.0",
     "i18next-http-backend": "^2.2.1",
+    "i18next-prisma-backend": "^0.0.1",
     "isbot": "^3.6.13",
     "lucide-react": "^0.263.1",
     "morgan": "^1.10.0",
