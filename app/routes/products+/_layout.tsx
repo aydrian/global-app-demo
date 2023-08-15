@@ -1,9 +1,24 @@
 import { type LoaderArgs, json } from "@remix-run/node";
-import { NavLink, Outlet, useLoaderData } from "@remix-run/react";
+import {
+  Form,
+  NavLink,
+  Outlet,
+  useLoaderData,
+  useLocation,
+  useSubmit
+} from "@remix-run/react";
 import { Github } from "lucide-react";
 import { useLocale } from "remix-i18next";
 
 import CoffeeBean from "~/components/coffee-bean.tsx";
+import { Button } from "~/components/ui/button.tsx";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from "~/components/ui/select.tsx";
 import { prisma } from "~/utils/db.server.ts";
 import env from "~/utils/env.server.ts";
 
@@ -29,7 +44,18 @@ export async function loader({ request }: LoaderArgs) {
 export default function ProductsLayout() {
   const { CRDB_GATEWAY_REGION, FLY_REGION, markets } =
     useLoaderData<typeof loader>();
+
   const locale = useLocale();
+  const submit = useSubmit();
+  const location = useLocation();
+
+  function handleLangChange(lang: string) {
+    submit(
+      { lng: lang, pathname: location.pathname },
+      { action: location.pathname, method: "GET" }
+    );
+  }
+
   return (
     <>
       <header className="fixed w-full bg-white">
@@ -67,14 +93,41 @@ export default function ProductsLayout() {
           <span>Fly Region: {FLY_REGION}</span>
           <span>Locale: {locale}</span>
         </div>
-        <a
-          href="https://github.com/aydrian/global-app-demo"
-          rel="noreferrer"
-          target="_blank"
-        >
-          <Github size="32" />
-          <span className="sr-only">GitHub Repo</span>
-        </a>
+        <div className="flex items-center gap-2">
+          <Form
+            action={location.pathname}
+            className="flex gap-1 text-black"
+            method="GET"
+          >
+            <Select
+              defaultValue={locale}
+              name="lng"
+              onValueChange={handleLangChange}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="select language" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="zh">🇨🇳 中文</SelectItem>
+                <SelectItem value="en">🇺🇸 English</SelectItem>
+                <SelectItem value="de">🇩🇪 Deutsch</SelectItem>
+                <SelectItem value="ja">🇯🇵 日本語</SelectItem>
+                <SelectItem value="es">🇪🇸 español</SelectItem>
+              </SelectContent>
+            </Select>
+            <Button type="submit" variant="secondary">
+              Go
+            </Button>
+          </Form>
+          <a
+            href="https://github.com/aydrian/global-app-demo"
+            rel="noreferrer"
+            target="_blank"
+          >
+            <Github size="32" />
+            <span className="sr-only">GitHub Repo</span>
+          </a>
+        </div>
       </footer>
     </>
   );

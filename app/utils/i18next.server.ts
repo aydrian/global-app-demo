@@ -3,10 +3,12 @@ import { RemixI18Next } from "remix-i18next";
 import i18n from "~/i18n.ts"; // your i18n configuration file
 import Backend from "i18next-prisma-backend";
 
+import { i18nextCookie } from "~/utils/cookie.server.ts";
 import { prisma } from "~/utils/db.server.ts";
 
 let i18next = new RemixI18Next({
   detection: {
+    cookie: i18nextCookie,
     fallbackLanguage: i18n.fallbackLng,
     supportedLanguages: i18n.supportedLngs
   },

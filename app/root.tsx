@@ -15,6 +15,7 @@ import { useChangeLanguage } from "remix-i18next";
 import i18next from "~/utils/i18next.server.ts";
 
 import styles from "./tailwind.css";
+import { i18nextCookie } from "./utils/cookie.server.ts";
 
 export const links: LinksFunction = () => [
   { href: styles, rel: "stylesheet" },
@@ -25,7 +26,12 @@ export const links: LinksFunction = () => [
 
 export async function loader({ request }: LoaderArgs) {
   let locale = await i18next.getLocale(request);
-  return json({ locale });
+  return json(
+    { locale },
+    {
+      headers: { "Set-Cookie": await i18nextCookie.serialize(locale) }
+    }
+  );
 }
 export let handle = {
   // In the handle export, we can add a i18n key with namespaces our route
