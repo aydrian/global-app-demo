@@ -50,10 +50,7 @@ export default function ProductsLayout() {
   const location = useLocation();
 
   function handleLangChange(lang: string) {
-    submit(
-      { lng: lang, pathname: location.pathname },
-      { action: location.pathname, method: "GET" }
-    );
+    submit({ lng: lang }, { action: location.pathname, method: "GET" });
   }
 
   return (
@@ -115,7 +112,7 @@ export default function ProductsLayout() {
                 <SelectItem value="es">🇪🇸 español</SelectItem>
               </SelectContent>
             </Select>
-            <Button type="submit" variant="secondary">
+            <Button className="has-js-hidden" type="submit" variant="secondary">
               Go
             </Button>
           </Form>
