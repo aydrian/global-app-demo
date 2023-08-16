@@ -6,7 +6,6 @@ import { useLocale } from "remix-i18next";
 import CoffeeBean from "~/components/coffee-bean.tsx";
 import { LanguageSwitcher } from "~/components/language-switcher.tsx";
 import { prisma } from "~/utils/db.server.ts";
-import env from "~/utils/env.server.ts";
 
 export async function loader({ request }: LoaderArgs) {
   const result = await prisma.$queryRaw<
@@ -30,7 +29,7 @@ export async function loader({ request }: LoaderArgs) {
 
   return json({
     CRDB_GATEWAY_REGION: result[0].gateway_region,
-    FLY_REGION: env.FLY_REGION,
+    FLY_REGION: process.env.FLY_REGION,
     langs,
     markets
   });

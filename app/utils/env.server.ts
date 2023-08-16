@@ -1,11 +1,31 @@
-import { z } from "zod";
+import { type TypeOf, z } from "zod";
 
-const envSchema = z.object({
+declare global {
+  namespace NodeJS {
+    interface ProcessEnv extends TypeOf<typeof zodEnv> {}
+  }
+}
+
+const zodEnv = z.object({
   // Database
-  DATABASE_URL: z.string().nonempty(),
+  DATABASE_URL: z.string(),
   // Fly Environment Variables
   FLY_REGION: z.string().default("iad")
 });
 
-const env = envSchema.parse(process.env);
-export default env;
+try {
+  zodEnv.parse(process.env);
+} catch (err) {
+  if (err instanceof z.ZodError) {
+    const { fieldErrors } = err.flatten();
+    const errorMessage = Object.entries(fieldErrors)
+      .map(([field, errors]) =>
+        errors ? `${field}: ${errors.join(", ")}` : field
+      )
+      .join("\n ");
+
+    throw new Error(`Missing environment variables:\n  ${errorMessage}`);
+
+    process.exit(1);
+  }
+}
