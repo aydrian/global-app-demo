@@ -9,6 +9,7 @@ import {
 } from "@remix-run/react";
 import { Github } from "lucide-react";
 import { useLocale } from "remix-i18next";
+import { ServerOnly } from "remix-utils";
 
 import CoffeeBean from "~/components/coffee-bean.tsx";
 import { Button } from "~/components/ui/button.tsx";
@@ -27,6 +28,14 @@ export async function loader({ request }: LoaderArgs) {
     { gateway_region: string }[]
   >`SELECT gateway_region();`;
 
+  const langs = [
+    { text: "🇨🇳 中文", value: "zh" },
+    { text: "🇺🇸 English", value: "en" },
+    { text: "🇩🇪 Deutsch", value: "de" },
+    { text: "🇯🇵 日本語", value: "ja" },
+    { text: "🇪🇸 español", value: "es" }
+  ];
+
   const markets = [
     { code: "de", name: "Germany" },
     { code: "mx", name: "Mexico" },
@@ -37,12 +46,13 @@ export async function loader({ request }: LoaderArgs) {
   return json({
     CRDB_GATEWAY_REGION: result[0].gateway_region,
     FLY_REGION: env.FLY_REGION,
+    langs,
     markets
   });
 }
 
 export default function ProductsLayout() {
-  const { CRDB_GATEWAY_REGION, FLY_REGION, markets } =
+  const { CRDB_GATEWAY_REGION, FLY_REGION, langs, markets } =
     useLoaderData<typeof loader>();
 
   const locale = useLocale();
@@ -91,31 +101,49 @@ export default function ProductsLayout() {
           <span>Locale: {locale}</span>
         </div>
         <div className="flex items-center gap-2">
-          <Form
-            action={location.pathname}
-            className="flex gap-1 text-black"
-            method="GET"
+          <ServerOnly
+            fallback={
+              <Select
+                defaultValue={locale}
+                name="lng"
+                onValueChange={handleLangChange}
+              >
+                <SelectTrigger className="text-black">
+                  <SelectValue placeholder="select language" />
+                </SelectTrigger>
+                <SelectContent>
+                  {langs.map(({ text, value }) => (
+                    <SelectItem key={`s-${value}`} value={value}>
+                      {text}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            }
           >
-            <Select
-              defaultValue={locale}
-              name="lng"
-              onValueChange={handleLangChange}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="select language" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="zh">🇨🇳 中文</SelectItem>
-                <SelectItem value="en">🇺🇸 English</SelectItem>
-                <SelectItem value="de">🇩🇪 Deutsch</SelectItem>
-                <SelectItem value="ja">🇯🇵 日本語</SelectItem>
-                <SelectItem value="es">🇪🇸 español</SelectItem>
-              </SelectContent>
-            </Select>
-            <Button className="has-js-hidden" type="submit" variant="secondary">
-              Go
-            </Button>
-          </Form>
+            {() => (
+              <Form
+                action={location.pathname}
+                className="flex gap-1 text-black"
+                method="GET"
+              >
+                <select
+                  className="rounded-md px-3 py-2"
+                  defaultValue={locale}
+                  name="lng"
+                >
+                  {langs.map(({ text, value }) => (
+                    <option key={`c-${value}`} value={value}>
+                      {text}
+                    </option>
+                  ))}
+                </select>
+                <Button type="submit" variant="secondary">
+                  Go
+                </Button>
+              </Form>
+            )}
+          </ServerOnly>
           <a
             href="https://github.com/aydrian/global-app-demo"
             rel="noreferrer"

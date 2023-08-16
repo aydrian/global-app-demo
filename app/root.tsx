@@ -64,11 +64,6 @@ export default function App() {
         <Outlet />
         <ScrollRestoration />
         <Scripts />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: "document.body.classList.add('has-js');"
-          }}
-        />
         <LiveReload />
       </body>
     </html>

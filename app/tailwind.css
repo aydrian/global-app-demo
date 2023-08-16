@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body.has-js .has-js-hidden {
-  display: none;
-}
-
 @layer base {
   :root {
     --background: 0 0% 100%;
