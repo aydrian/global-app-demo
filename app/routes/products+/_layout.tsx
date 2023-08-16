@@ -1,25 +1,10 @@
 import { type LoaderArgs, json } from "@remix-run/node";
-import {
-  Form,
-  NavLink,
-  Outlet,
-  useLoaderData,
-  useLocation,
-  useSubmit
-} from "@remix-run/react";
+import { NavLink, Outlet, useLoaderData } from "@remix-run/react";
 import { Github } from "lucide-react";
 import { useLocale } from "remix-i18next";
-import { ServerOnly } from "remix-utils";
 
 import CoffeeBean from "~/components/coffee-bean.tsx";
-import { Button } from "~/components/ui/button.tsx";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from "~/components/ui/select.tsx";
+import { LanguageSwitcher } from "~/components/language-switcher.tsx";
 import { prisma } from "~/utils/db.server.ts";
 import env from "~/utils/env.server.ts";
 
@@ -56,12 +41,6 @@ export default function ProductsLayout() {
     useLoaderData<typeof loader>();
 
   const locale = useLocale();
-  const submit = useSubmit();
-  const location = useLocation();
-
-  function handleLangChange(lang: string) {
-    submit({ lng: lang }, { action: location.pathname, method: "GET" });
-  }
 
   return (
     <>
@@ -101,49 +80,7 @@ export default function ProductsLayout() {
           <span>Locale: {locale}</span>
         </div>
         <div className="flex items-center gap-2">
-          <ServerOnly
-            fallback={
-              <Select
-                defaultValue={locale}
-                name="lng"
-                onValueChange={handleLangChange}
-              >
-                <SelectTrigger className="text-black">
-                  <SelectValue placeholder="select language" />
-                </SelectTrigger>
-                <SelectContent>
-                  {langs.map(({ text, value }) => (
-                    <SelectItem key={`s-${value}`} value={value}>
-                      {text}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            }
-          >
-            {() => (
-              <Form
-                action={location.pathname}
-                className="flex gap-1 text-black"
-                method="GET"
-              >
-                <select
-                  className="rounded-md px-3 py-2"
-                  defaultValue={locale}
-                  name="lng"
-                >
-                  {langs.map(({ text, value }) => (
-                    <option key={`c-${value}`} value={value}>
-                      {text}
-                    </option>
-                  ))}
-                </select>
-                <Button type="submit" variant="secondary">
-                  Go
-                </Button>
-              </Form>
-            )}
-          </ServerOnly>
+          <LanguageSwitcher languages={langs} name="lng" />
           <a
             href="https://github.com/aydrian/global-app-demo"
             rel="noreferrer"
